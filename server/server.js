@@ -6,14 +6,19 @@ import env from 'dotenv'
 env.config();
 
 const app = express();
-const port = 3000;
+const port = process.env.Port || 8080
   
 const db = new pg.Pool({
-   connectionString: process.env.DATABASE_URL,
-   ssl: 
-     process.env.NODE_ENV === "production" 
-     ? {rejectUnauthorized: false } 
-     : false, 
+//    connectionString: process.env.DATABASE_URL,
+//    ssl: 
+//      process.env.NODE_ENV === "production" 
+//      ? {rejectUnauthorized: false } 
+//      : false, 
+    user: process.env.PG_USER,
+    host: process.env.PG_HOST,
+    database: process.env.PG_DATABASE,
+    password: process.env.PG_PASSWORD,
+    port: process.env.PG_PORT,
 });
 
 
@@ -21,7 +26,7 @@ const db = new pg.Pool({
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(
   cors({
-    origin: "http://localhost:5173", // your React app's URL
+    origin: process.env.FRONTEND_URL, // your React app's URL
     
   })
 );
@@ -30,9 +35,9 @@ app.use(express.json());
 //create a todo 
 app.post("/todos", async(req, res)=>{
     try{
-        const inputTodo = req.body.description;
-        const response = await db.query("INSERT INTO todos (description) VALUES ($1) RETURNING *",
-             [inputTodo])
+        const {description, title} = req.body;
+        const response = await db.query("INSERT INTO todos (description, title) VALUES ($1, $2) RETURNING *",
+             [description, title])
         res.json(response.rows[0])
     }catch(err){
         console.log("error on adding todo", err)
@@ -50,6 +55,16 @@ app.get("/todos/:id", async(req, res)=>{
         console.log("error on getting the todos", err)
     }
 });
+
+app.patch('/todos/:id', async(req, res)=>{
+    try {
+        const {id} = req.params
+        const response = await db.query('UPDATE todos SET is_completed = true WHERE id = $1 RETURNING *', [id])
+        res.json(response.rows[0])
+    } catch (error) {
+        console.log("error on handling the completed function todos", err)
+    }
+})
 //get all the todo
 app.get("/todos", async(req, res)=>{
     try{
@@ -64,8 +79,8 @@ app.get("/todos", async(req, res)=>{
 app.put("/todos/:id", async(req, res)=>{
     try{
         const {id} = req.params;
-        const {description} = req.body;
-        const response = await db.query("UPDATE todos SET description = $1 WHERE id = $2", [description, id])
+        const {description, title} = req.body;
+        const response = await db.query("UPDATE todos SET description = $1, title = $2 WHERE id = $3", [description,title, id])
         res.json("todo was updated");
     }catch(err){
         console.log("error handing the editing", err)
