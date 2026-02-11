@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Header from "./Header.jsx";
-import Footer from "./Footer.jsx";
-import Note from "./Note.jsx";
-import CreateArea from "./CreateArea.jsx";
+import Header from "./components/Header.jsx";
+import Footer from "./components/Footer.jsx";
+import Note from "./components/Note.jsx";
+import CreateArea from "./components/CreateArea.jsx";
 import axios from "axios";
-import { API_URL } from "../API_URL.js";
+import { API_URL } from "./API_URL.js";
 
-function App() {
+export default function KeeperPage() {
   const [notes, setNotes] = useState([]);
   const [refresh , setRefresh] = useState(0)
 
@@ -17,7 +17,7 @@ function App() {
   const fetchData = async(e)=>{
    
     try {
-      const res = await axios.get(`${API_URL}/todos`)
+      const res = await axios.get(`${API_URL}/todos`, {withCredentials: true})
       setNotes(res.data)
     } catch (error) {
       console.log(error)
@@ -27,7 +27,7 @@ function App() {
   const handleDelete = async (id)=>{
     console.log(id)
     try {
-      const res = await axios.delete(`${API_URL}/todos/${id}`)
+      const res = await axios.delete(`${API_URL}/todos/${id}`, {withCredentials: true})
       handleRefresh()
     } catch (error) {
       console.log(error)
@@ -36,7 +36,7 @@ function App() {
   const handleComplete = async(id)=>{
     console.log(id)
     try {
-      const res = await axios.patch(`${API_URL}/todos/${id}`)
+      const res = await axios.patch(`${API_URL}/todos/${id}`, {withCredentials: true})
       handleRefresh()
     } catch (error) {
       console.log(error)
@@ -72,4 +72,4 @@ function App() {
   );
 }
 
-export default App;
+
