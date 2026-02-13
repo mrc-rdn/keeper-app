@@ -4,13 +4,14 @@ import { useNavigate } from 'react-router-dom'
 import { API_URL } from '../API_URL'
 
 axios.defaults.withCredentials = true;
-export default function Logout() {
+export default function Logout({setUser}) {
     const [isModal , setIsModal] = useState(false)
     const navigate = useNavigate()
     const handleLogout = async ()=>{
         try {
-            const res = await axios.post(`${API_URL}/keeper/logout`,{},{withCredentials:true})
-            navigate(res.data.redirectTo)
+            await axios.post(`${API_URL}/api/auth/logout`,{},)
+            navigate("/login")
+            setUser(null)
         } catch (error) {
             console.log(error)
         }

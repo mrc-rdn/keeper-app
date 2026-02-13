@@ -8,20 +8,21 @@ axios.defaults.withCredentials = true;
 export default function ProtectedRoute({children}) {
     const [isAuth, setIsAuth] = useState(null)
 
-    const fecthAuth = async()=> {
-        try {
-            const res = await axios.get(`${API_URL}/protectedroute`, {withCredentials:true})
-            console.log(res.data)
-            setIsAuth(res.data.success)
-        } catch (error) {
-            setIsAuth(false)
-        }
-    }
+   
     useEffect(()=>{
+        const fecthAuth = async () => {
+            try {
+                const res = await axios.get(`${API_URL}/protectedroute`, {withCredentials:true})
+                console.log(res.data)
+                setIsAuth(res.data.success)
+            } catch (error) {
+                setIsAuth(false)
+            }
+        }
         fecthAuth()
     },[])
    if(isAuth === null) return <p>...Loading</p>
 
-  return isAuth? children : <Navigate to='/' replace />;;
+  return isAuth? children : <Navigate to='/' replace />;
   
 }

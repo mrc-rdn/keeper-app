@@ -6,9 +6,20 @@ import CreateArea from "./components/CreateArea.jsx";
 import axios from "axios";
 import { API_URL } from "./API_URL.js";
 
-export default function KeeperPage() {
+axios.defaults.withCredentials = true;
+
+export default function KeeperPage( {user, setUser}) {
   const [notes, setNotes] = useState([]);
   const [refresh , setRefresh] = useState(0)
+  const getAuthHeader = () => {
+    const token = localStorage.getItem('token');
+    return {
+      headers: {
+        Authorization: `Bearer ${token}` // This bypasses the cookie issues
+      },
+      withCredentials: true
+    };
+  };
 
   const handleRefresh = ()=>{
     setRefresh(prev => prev + 1)
@@ -17,7 +28,7 @@ export default function KeeperPage() {
   const fetchData = async(e)=>{
    
     try {
-      const res = await axios.get(`${API_URL}/todos`, {withCredentials: true})
+      const res = await axios.get(`${API_URL}/api/auth/todos`,getAuthHeader() )
       setNotes(res.data)
     } catch (error) {
       console.log(error)
@@ -27,7 +38,7 @@ export default function KeeperPage() {
   const handleDelete = async (id)=>{
     console.log(id)
     try {
-      const res = await axios.delete(`${API_URL}/todos/${id}`, {withCredentials: true})
+      const res = await axios.delete(`${API_URL}/api/auth/todos/${id}`,getAuthHeader() )
       handleRefresh()
     } catch (error) {
       console.log(error)
@@ -36,7 +47,7 @@ export default function KeeperPage() {
   const handleComplete = async(id)=>{
     console.log(id)
     try {
-      const res = await axios.patch(`${API_URL}/todos/${id}`, {withCredentials: true})
+      const res = await axios.patch(`${API_URL}/api/auth/todos/${id}`,getAuthHeader())
       handleRefresh()
     } catch (error) {
       console.log(error)
@@ -44,12 +55,13 @@ export default function KeeperPage() {
   }
 
   useEffect(()=>{
+    
     fetchData()
   },[refresh])
 
   return (
     <div className="">
-      <Header />
+      <Header user={user} setUser={setUser} />
       <CreateArea onRefresh={handleRefresh} />
       <div className="flex gap-4 flex-wrap">
         {notes.map((noteItem, index) => {

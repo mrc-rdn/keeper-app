@@ -3,10 +3,10 @@ import axios from 'axios';
 import { API_URL } from '../../API_URL';
 import { useNavigate } from 'react-router-dom';
 
-axios.defaults.withCredentials = true;
 
-const AuthPage = () => {
-  const [isRegister, setIsRegister] = useState(false);
+
+const AuthPage = ({setUser}) => {
+  const [error , setError]  = useState("")
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -21,22 +21,24 @@ const AuthPage = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try {
-      if (isRegister && formData.password !== formData.confirmPassword) {
+      if (formData.password !== formData.confirmPassword) {
         alert("Passwords do not match!");
         return;
       }else{
-        const res = await axios.post(`${API_URL}/createaccount`,{username: formData.username, password: formData.password}, {withCredentials:true} )
+        const res = await axios.post(`${API_URL}/api/auth/register`,{username: formData.username, password: formData.password},{withCredentials:true} )
+      
         setFormData({
           username: '',
           password: '',
           confirmPassword: ''
         })
-        navigate('/')
+        navigate('/login')
         console.log(res)
         
       }
     } catch (error) {
       console.log(error)
+       setError("Invalid email or password")
     }
     
    
@@ -46,9 +48,9 @@ const AuthPage = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-          {isRegister ? 'Create Account' : 'Welcome Back'}
+          Create Account
         </h2>
-
+        <p className='text-center text-red-500 m-3'>{error}</p>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700">Username</label>
@@ -69,7 +71,7 @@ const AuthPage = () => {
               name="password"
               required
               className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-              placeholder="••••••••"
+              placeholder="Password"
               onChange={handleChange}
             />
           </div>
@@ -82,7 +84,7 @@ const AuthPage = () => {
                 name="confirmPassword"
                 required
                 className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                placeholder="••••••••"
+                placeholder="Confirm Password"
                 onChange={handleChange}
               />
             </div>
@@ -98,7 +100,7 @@ const AuthPage = () => {
 
         <div className="mt-6 text-center">
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/login')}
             className="text-sm text-blue-600 hover:underline"
           >
             Already have an account? Login

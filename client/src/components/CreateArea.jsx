@@ -2,11 +2,21 @@ import React, { useState } from "react";
 import axios from 'axios'
 import {API_URL} from '../API_URL.js'
 axios.defaults.withCredentials = true;
+
 function CreateArea(props) {
   const [note, setNote] = useState({
     title: "",
     content: ""
   });
+  const getAuthHeader = () => {
+    const token = localStorage.getItem('token');
+    return {
+      headers: {
+        Authorization: `Bearer ${token}` // This bypasses the cookie issues
+      },
+      withCredentials: true
+    };
+  };
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -22,7 +32,7 @@ function CreateArea(props) {
   const submitNote = async(event)=> {
     event.preventDefault();
     try {
-      const response = await axios.post(`${API_URL}/todos`,{description: note.content, title: note.title}, {withCredentials: true})
+      const response = await axios.post(`${API_URL}/api/auth/todos`,{description: note.content, title: note.title}, getAuthHeader())
        setNote({
           title: "",
           content: ""

@@ -7,12 +7,11 @@ import { useNavigate } from 'react-router-dom';
 
 axios.defaults.withCredentials = true;
 
-const AuthPage = () => {
-  const [isRegister, setIsRegister] = useState(false);
+const AuthPage = ({setUser}) => {
+  const [error , setError]  = useState("")
   const [formData, setFormData] = useState({
     username: '',
-    password: '',
-    confirmPassword: ''
+    password: ''
   });
   const navigate = useNavigate()
 
@@ -24,11 +23,13 @@ const AuthPage = () => {
     e.preventDefault();
     try {
       
-        const res = await axios.post(`${API_URL}/login`,{username: formData.username, password: formData.password}, {withCredentials:true} )
-        console.log(res)
-        navigate(res.data.redirectTo)
+        const res = await axios.post(`${API_URL}/api/auth/login`,formData)
+        setUser(res.data.user)
+        
+        navigate("/")
     } catch (error) {
       console.log(error)
+      setError("Invalid email or password")
     }
     
    
@@ -40,7 +41,7 @@ const AuthPage = () => {
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Welcome to Keeper
         </h2>
-
+        <p className='text-center text-red-500 m-3'>{error}</p>
         <div>
           <div>
             <label className=" text-sm font-medium text-gray-700">Username</label>

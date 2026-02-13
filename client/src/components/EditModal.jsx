@@ -23,7 +23,7 @@ export default function EditModal(props) {
     const submitNote = async(event)=> {
         event.preventDefault();
         try {
-        const response = await axios.put(`${API_URL}/todos/${props.id}`,{description: note.content, title: note.title}, {withCredentials: true})
+        const response = await axios.put(`${API_URL}/api/auth/todos/${props.id}`,{description: note.content, title: note.title})
         props.handleCloseModal()
         } catch (error) {
         console.log(error)
