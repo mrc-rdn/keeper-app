@@ -5,10 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const api = axios.create({
-  baseURL: "http://3.1.81.248:3000",
-  withCredentials: true // THIS IS THE KEY
-});
+axios.defaults.withCredentials = true;
 
 const AuthPage = () => {
   const [isRegister, setIsRegister] = useState(false);

@@ -2,10 +2,7 @@ import React, {useEffect, useState} from "react";
 import Logout from "./Logout";
 import axios from "axios";
 import { API_URL } from "../API_URL";
-const api = axios.create({
-  baseURL: "http://3.1.81.248:3000",
-  withCredentials: true // THIS IS THE KEY
-});
+axios.defaults.withCredentials = true;
 function Header() {
   const [data, setData] = useState(null)
  

@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios'
 import {API_URL} from '../API_URL.js'
-const api = axios.create({
-  baseURL: "http://3.1.81.248:3000",
-  withCredentials: true // THIS IS THE KEY
-});
+axios.defaults.withCredentials = true;
 function CreateArea(props) {
   const [note, setNote] = useState({
     title: "",

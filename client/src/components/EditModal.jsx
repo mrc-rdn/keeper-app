@@ -2,10 +2,7 @@ import React, {useState} from 'react'
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 import { API_URL } from '../API_URL';
-const api = axios.create({
-  baseURL: "http://3.1.81.248:3000",
-  withCredentials: true // THIS IS THE KEY
-});
+axios.defaults.withCredentials = true;
 export default function EditModal(props) {
     const [note, setNote] = useState({
         title: props.title,

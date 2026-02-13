@@ -3,10 +3,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { API_URL } from '../API_URL'
 
-const api = axios.create({
-  baseURL: "http://3.1.81.248:3000",
-  withCredentials: true // THIS IS THE KEY
-});
+axios.defaults.withCredentials = true;
 export default function Logout() {
     const [isModal , setIsModal] = useState(false)
     const navigate = useNavigate()

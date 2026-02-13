@@ -43,7 +43,7 @@ app.use(
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   cookie: {
     httpOnly: true,
     secure: false, // true if using https
@@ -59,6 +59,10 @@ app.use(passport.session());
 function generateNumericId() {
   return Date.now().toString().slice(-6) + Math.floor(100 + Math.random() * 900);
 }
+
+app.get('/', (req, res)=>{
+  res.send("HELLO")
+})
 
 app.post("/createaccount", async (req, res) => {
   const { username, password } = req.body;
@@ -111,7 +115,7 @@ app.get("/protectedroute", async (req, res) => {
     if (!req.isAuthenticated()) {
       res.status(401).json({ success: false, message: 'Unauthorized' })
     }
-    res.status(200).json({ success: true, message: "success login", user: req.user.username })
+    return res.status(200).json({ success: true, message: "success login", user: req.user.username })
   } catch (error) {
     res.status(400).json({ success: false, message: "Server error" })
   }
