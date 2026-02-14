@@ -35,7 +35,7 @@ function App() {
 
 
   return (
-    <div className="">
+    
       <Router >
         <Routes>
           <Route path="/login" element={user ?<Navigate to="/" />:<Loginpage setUser={setUser} />} />
@@ -43,7 +43,7 @@ function App() {
           <Route path="/" element={user?<KeeperPage user={user} setUser={setUser} />: <Navigate to="/login" />} />
         </Routes>
       </Router>
-    </div>
+    
   );
 }
 

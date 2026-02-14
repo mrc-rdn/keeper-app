@@ -63,7 +63,7 @@ export default function KeeperPage( {user, setUser}) {
     <div className="">
       <Header user={user} setUser={setUser} />
       <CreateArea onRefresh={handleRefresh} />
-      <div className="flex gap-4 flex-wrap">
+      <div className="flex gap-4 flex-wrap p-3">
         {notes.map((noteItem, index) => {
           return (
             <Note

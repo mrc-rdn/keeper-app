@@ -45,14 +45,14 @@ const AuthPage = ({setUser}) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
+    <div className=" w-full h-screen grid place-items-center">
+      <div className="w-10/12 h-10/12 md:w-8/12 xl:w-6/12 p-10 bg-[#f5ba13] rounded-xl shadow-md relative">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Create Account
         </h2>
-        <p className='text-center text-red-500 m-3'>{error}</p>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
+        <p className='text-center text-red-600 m-3 absolute left-67 top-20'>{error}</p>
+        <div className="space-y-6">
+          <div className='m-5'>
             <label className="block text-sm font-medium text-gray-700">Username</label>
             <input
               type="text"
@@ -64,7 +64,7 @@ const AuthPage = ({setUser}) => {
             />
           </div>
 
-          <div>
+          <div className='m-5'>
             <label className="block text-sm font-medium text-gray-700">Password</label>
             <input
               type="password"
@@ -77,31 +77,34 @@ const AuthPage = ({setUser}) => {
           </div>
 
           
-            <div className="animate-fade-in">
-              <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
-              <input
-                type="password"
-                name="confirmPassword"
-                required
-                className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                placeholder="Confirm Password"
-                onChange={handleChange}
-              />
-            </div>
+          <div className="m-5">
+            <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              required
+              className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+              placeholder="Confirm Password"
+              onChange={handleChange}
+            />
+          </div>
          
+          <div className='m-10'>
+            <button
+              onClick={handleSubmit}
+              className="w-full bg-white p-5 rounded-xl transition duration-500 hover:scale-105 hover:text-[#f5ba13]"
+            >
+              Register
+            </button>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition duration-300 ease-in-out transform hover:scale-[1.02]"
-          >
-           Register
-          </button>
-        </form>
+          </div>
+          
+        </div>
 
         <div className="mt-6 text-center">
           <button
             onClick={() => navigate('/login')}
-            className="text-sm text-blue-600 hover:underline"
+            className="text-sm text-blue-800 hover:underline"
           >
             Already have an account? Login
           </button>

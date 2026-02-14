@@ -31,8 +31,8 @@ export default function EditModal(props) {
     
     }
   return  (
-    <div className='w-full h-full absolute bg-white/50 backdrop-blur inset-0 grid place-items-center'>
-        <div className='w-4/12 h-5/12 bg-white rounded-xl shadow-md p-6 border border-gray-300'>
+    <div className='w-full h-full absolute bg-black/50 backdrop-blur inset-0 grid place-items-center'>
+        <div className='w-10/12 h-5/12 md:w-8/12 lg:w-6/12 xl:w-4/12 bg-white rounded-xl shadow-md p-6 border border-gray-300'>
             <div className='w-full flex'>
                 <h1 className='text-xl font-semibold'>Edit</h1>
                <button className='ml-auto' onClick={()=>{props.handleCloseModal()}}><CloseIcon /></button> 
@@ -53,7 +53,7 @@ export default function EditModal(props) {
                     placeholder="Take a note..."
                     rows="3"
                     />
-                    <button className="w-30 h-10 bg-[#f5ba13] m-3 rounded text-white ml-auto" onClick={submitNote}>Submit</button>
+                    <button className="w-30 h-10 bg-[#f5ba13] m-3 rounded text-white ml-auto mt-10" onClick={submitNote}>Submit</button>
             </div>
             
         </div>

@@ -13,24 +13,11 @@
 html {
   font-family: "Montserrat", sans-serif;
 }
-body {
-  background: #eee;
-  padding: 0 16px;
+body{
+  background-color: #ffffff;
+  background-image: url("https://www.transparenttextures.com/patterns/hexellence.png");
+  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
-
-header {
-  background-color: #f5ba13;
-  margin: auto -16px;
-  padding: 16px 32px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
-}
-
-header h1 {
-  color: #fff;
-  font-family: "McLaren", cursive;
-  font-weight: 200;
-}
-
 footer {
   position: absolute;
   text-align: center;

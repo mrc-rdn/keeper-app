@@ -36,14 +36,14 @@ const AuthPage = ({setUser}) => {
   };
 
   return (
-    <div className=" w-full bg">
-      <div className="">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+    <div className=" w-full h-screen grid place-items-center ">
+      <div className="w-10/12 h-10/12 md:w-8/12 xl:w-6/12 p-10 bg-[#f5ba13] rounded-xl shadow-md relative">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 mt-7">
           Welcome to Keeper
         </h2>
-        <p className='text-center text-red-500 m-3'>{error}</p>
-        <div>
-          <div>
+         <p className='text-center text-red-600 m-3 absolute left-67 top-30'>{error}</p>
+        <div className='mt-20'>
+          <div className='m-5'>
             <label className=" text-sm font-medium text-gray-700">Username</label>
             <input
               type="text"
@@ -55,7 +55,7 @@ const AuthPage = ({setUser}) => {
             />
           </div>
 
-          <div>
+          <div className='m-5'>
             <label className="block text-sm font-medium text-gray-700">Password</label>
             <input
               type="password"
@@ -68,20 +68,23 @@ const AuthPage = ({setUser}) => {
           </div>
 
 
-
-          <button
+          <div className='m-10'>
+            <button
             
-            className=""
-            onClick={handleSubmit}
-          >
-            Sign In
-          </button>
+              className="w-full bg-white p-5 rounded-xl transition duration-500 hover:scale-105 hover:text-[#f5ba13]"
+              onClick={handleSubmit}
+            >
+              Sign In
+            </button>
+
+          </div>
+          
         </div>
 
-        <div className="mt-6 text-center">
+        <div className="mt-3 text-center">
           <button
             onClick={() => navigate("/register")}
-            className="text-sm text-blue-600 hover:underline"
+            className="text-sm text-blue-800 hover:underline"
           >
              "Don't have an account? Register"
           </button>
